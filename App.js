@@ -1,11 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import AuthScreen from './screens/AuthScreen'
+import WelcomeScreen from './screens/WelcomeScreen'
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function App() {
+  const Tab = createBottomTabNavigator();
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen name="Welcome" component={WelcomeScreen} />
+        <Tab.Screen name="Auth" component={AuthScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
 
