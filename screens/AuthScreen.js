@@ -1,19 +1,28 @@
 import React, {useEffect} from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, AsyncStorage } from 'react-native';
 import {connect} from 'react-redux'
 import {facebookLogin} from '../actions/authActions'
 
-const AuthScreen = ({onFacebookLogin}) => {
-    useEffect(async () => {
-      console.log('calling: ');
-      return await onFacebookLogin()
-    })
+const AuthScreen = ({onFacebookLogin, token, navigation}) => {
 
-    return (
-      <View>
-          <Text>AuthScreen</Text>
-      </View>
-)};
+  useEffect(() => {
+    onFacebookLogin()
+    onAuthComplete()
+  }, [])
+
+  useEffect(() => {
+    onAuthComplete()
+  }, [token])
+
+  function onAuthComplete() {
+    if (token) {
+      return navigation.navigate('main')
+    }
+  }
+  return (
+    <View />
+  )
+};
 
 const mapDispatchToProps = dispatch => {
   return {
@@ -21,4 +30,10 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AuthScreen);
+const mapStateToProps = ({auth}) => {
+  return {
+    token: auth.token
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
