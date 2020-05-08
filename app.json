@@ -20,9 +20,15 @@
     },
     "assetBundlePatterns": [
       "**/*"
-    ],
-    "ios": {
-      "supportsTablet": true
+    ]
+  },
+  "android": {
+    "package": "com.ercekal.jobs",
+    "config": {
+      "googleMaps": {
+        "apiKey": "AIzaSyDLVoGpLYXiyoIflocIULX30OTuqVOhlDA"
+      },
+      "versionCode": 1
     }
   }
 }
