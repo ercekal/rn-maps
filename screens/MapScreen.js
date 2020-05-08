@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, Dimensions, ActivityIndicator } from 'react-native';
 import MapView from 'react-native-maps';
+import {connect} from 'react-redux'
 
-const initialRegion = {
+const INITIAL_REGION = {
   longitude: -122,
   latitude: 37,
   longitudeDelta: 0.04,
   latitudeDelta: 0.09
 }
-const MapScreen = () => {
-  const [region, setRegion] = useState(initialRegion)
+const MapScreen = ({jobs}) => {
+  console.log('jobs: ', jobs);
+  const [region, setRegion] = useState(INITIAL_REGION)
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => setMapLoaded(true), [])
 
+  const onRegionChangeComplete = (region) => {
+    setRegion(region)
+  }
   if(!mapLoaded) {
     <View style={{flex:1, justifyContent: 'center'}}>
       <ActivityIndicator size='large' />
@@ -24,12 +29,26 @@ const MapScreen = () => {
       <MapView
         region={region}
         style={styles.mapStyle}
+        onRegionChangeComplete={onRegionChangeComplete}
         />
     </View>
   )
 };
 
-export default MapScreen;
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onFetchJobs: () => dispatch(fetchJobs())
+//   }
+// }
+const mapStateToProps = ({job}) => {
+  console.log('job: ', job);
+  return {
+    jobs: job.jobs
+
+  }
+}
+
+export default connect(mapStateToProps)(MapScreen);
 
 const styles = StyleSheet.create({
   container: {
