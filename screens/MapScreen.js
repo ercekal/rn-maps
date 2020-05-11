@@ -2,7 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { ActivityIndicator, StyleSheet, Dimensions, View } from "react-native";
 import MapView from 'react-native-maps';
 import {connect} from 'react-redux'
-// import { fetchJobs,fetchJobs2 } from '../actions/jobActions'
+import { fetchJobs } from '../actions/jobActions'
+import {data} from '../mockData/mock'
 
 const INITIAL_REGION = {
   longitude: -122,
@@ -10,7 +11,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.04,
   latitudeDelta: 0.09
 }
-const MapScreen = ({jobs}) => {
+const MapScreen = ({jobs, onFetchJobs}) => {
   console.log('jobs: ', jobs);
   const [region, setRegion] = useState(INITIAL_REGION)
   const [mapLoaded, setMapLoaded] = useState(false)
@@ -18,9 +19,11 @@ const MapScreen = ({jobs}) => {
   useEffect(() => setMapLoaded(true), [])
 
   const onRegionChangeComplete = (region) => {
-    // onFetchJobs(region)
+    console.log('region: ', region);
+    onFetchJobs(region)
     setRegion(region)
   }
+
   if (!mapLoaded) {
     <View style={{flex:1, justifyContent: 'center'}}>
       <ActivityIndicator size='large' />
@@ -37,11 +40,11 @@ const MapScreen = ({jobs}) => {
   )
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     onFetchJobs: () => dispatch(fetchJobs())
-//   }
-// }
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchJobs: (region) => dispatch(fetchJobs(region))
+  }
+}
 
 const mapStateToProps = ({job}) => {
   console.log('job: ', job);
@@ -51,7 +54,7 @@ const mapStateToProps = ({job}) => {
   }
 }
 
-export default connect(mapStateToProps)(MapScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
 
 const styles = StyleSheet.create({
   container: {

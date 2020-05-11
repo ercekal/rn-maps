@@ -1,4 +1,4 @@
-{
+export const mockData = {
   "version":2,
   "query":"java",
   "location":"austin, tx",
@@ -19,9 +19,7 @@
           "formattedLocation":"Austin, TX",
           "source":"Dice",
           "date":"Mon, 02 Aug 2017 16:21:00 GMT",
-          "snippet":"looking for an object-oriented Java Developer... Java Servlets,
-            HTML, JavaScript, AJAX, Struts, Struts2, JSF) desirable. Familiarity with
-            Tomcat and the Java...",
+          "snippet":"looking for an object-oriented Java Developer... Java Servlets...",
           "url":"https://www.indeed.com/viewjob?jk=12345&indpubnum=8343699265155203",
           "onmousedown":"indeed_clk(this, '0000');",
           "latitude":30.27127,
@@ -32,6 +30,27 @@
           "indeedApply":true,
           "formattedLocationFull":"Austin, TX",
           "formattedRelativeTime":"11 hours ago"
-      }
+      },
+      {
+        "jobtitle":"Ruby Developer",
+        "company":"ABC Corp.,",
+        "city":"Houston",
+        "state":"TX",
+        "country":"US",
+        "formattedLocation":"Houston, TX",
+        "source":"Dice",
+        "date":"Mon, 02 Aug 2017 16:21:00 GMT",
+        "snippet":"looking for an OOP JS Developer... Java Servlets...",
+        "url":"https://www.indeed.com/viewjob?jk=123423&indpubnum=8343699265155203",
+        "onmousedown":"indeed_clk(this, '0000');",
+        "latitude":29.27127,
+        "longitude":-87.74103,
+        "jobkey":"123423",
+        "sponsored":false,
+        "expired":false,
+        "indeedApply":true,
+        "formattedLocationFull":"Houston, TX",
+        "formattedRelativeTime":"23 hours ago"
+    }
   ]
 }
