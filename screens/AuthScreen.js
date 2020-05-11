@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Text, View, AsyncStorage } from 'react-native';
+import { View } from 'react-native';
 import {connect} from 'react-redux'
 import {facebookLogin} from '../actions/authActions'
 

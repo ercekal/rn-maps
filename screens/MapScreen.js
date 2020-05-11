@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
-import { StyleSheet, Text, View, Dimensions, ActivityIndicator } from 'react-native';
+import { ActivityIndicator, StyleSheet, Dimensions, View } from "react-native";
 import MapView from 'react-native-maps';
 import {connect} from 'react-redux'
+// import { fetchJobs,fetchJobs2 } from '../actions/jobActions'
 
 const INITIAL_REGION = {
   longitude: -122,
@@ -17,9 +18,10 @@ const MapScreen = ({jobs}) => {
   useEffect(() => setMapLoaded(true), [])
 
   const onRegionChangeComplete = (region) => {
+    // onFetchJobs(region)
     setRegion(region)
   }
-  if(!mapLoaded) {
+  if (!mapLoaded) {
     <View style={{flex:1, justifyContent: 'center'}}>
       <ActivityIndicator size='large' />
     </View>
@@ -40,6 +42,7 @@ const MapScreen = ({jobs}) => {
 //     onFetchJobs: () => dispatch(fetchJobs())
 //   }
 // }
+
 const mapStateToProps = ({job}) => {
   console.log('job: ', job);
   return {

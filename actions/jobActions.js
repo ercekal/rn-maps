@@ -21,7 +21,12 @@ const buildJobsUrl = zip => {
   return `${JOB_ROOT_URL}${query}`
 }
 
-export const fetchJobs = (region) => async (dispatch) => {
+export const fetchJobs2 = () => (dispatch) => {
+  console.log('fetchJobs2: ');
+  dispatch({type: FETCH_JOBS, payload: MOCKDATA})
+}
+
+export const fetchJobs = (region) => (dispatch) => {
   console.log('region: ', region);
   // try {
   //   let zip = await reverseGeocode(region)
@@ -29,7 +34,7 @@ export const fetchJobs = (region) => async (dispatch) => {
   //   const url = buildJobsUrl(zip)
   //   // let {data} = await axios.get(url)
   //   console.log('MOCKDATA: ', MOCKDATA);
-  //   dispatch({type: FETCH_JOBS, payload: MOCKDATA})
+    dispatch({type: FETCH_JOBS, payload: MOCKDATA})
   // } catch (e) {
   //   console.log('e: ', e);
   // }

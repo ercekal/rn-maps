@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native'
+import { AsyncStorage } from 'react-native';
 import * as Facebook from 'expo-facebook';
 import {
   FACEBOOK_LOGIN_SUCCESS,
