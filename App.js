@@ -44,7 +44,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <NavigationContainer>
-        <Tab.Navigator>
+        <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
           <Tab.Screen name="welcome" component={WelcomeScreen} />
           <Tab.Screen name="auth" component={AuthScreen} />
           <Tab.Screen name="main" component={Main} />
@@ -52,6 +52,10 @@ export default function App() {
       </NavigationContainer>
     </Provider>
   );
+}
+
+App.navigationOptions = {
+  tabBarVisible: false
 }
 
 const styles = StyleSheet.create({

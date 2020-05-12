@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import { View } from 'react-native';
 import {connect} from 'react-redux'
-import {facebookLogin} from '../actions/authActions'
+import * as actions from '../actions'
 
-const AuthScreen = ({onFacebookLogin, token, navigation}) => {
+const AuthScreen = ({facebookLogin, token, navigation}) => {
 
   useEffect(() => {
-    onFacebookLogin()
+    facebookLogin()
     onAuthComplete()
   }, [])
 
@@ -24,16 +24,10 @@ const AuthScreen = ({onFacebookLogin, token, navigation}) => {
   )
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFacebookLogin: () => dispatch(facebookLogin())
-  }
-}
-
 const mapStateToProps = ({auth}) => {
   return {
     token: auth.token
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthScreen);
+export default connect(mapStateToProps, actions)(AuthScreen);

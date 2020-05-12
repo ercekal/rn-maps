@@ -1,7 +1,7 @@
 import React from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { Button, Card } from 'react-native-elements'
 import { connect } from 'react-redux';
+import { Text, View, ScrollView, Linking } from 'react-native';
+import { Button, Card } from 'react-native-elements'
 import MapView from 'react-native-maps';
 
 const ReviewScreen = ({navigation, route, likedJobs}) => {
@@ -80,7 +80,6 @@ const styles = {
 }
 
 const mapStateToProps = state => {
-  console.log('likedJobs: ', state);
   return { likedJobs: state.likedJobs };
 }
 

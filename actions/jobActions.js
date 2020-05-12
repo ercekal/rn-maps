@@ -2,7 +2,7 @@ import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 import { GEOLOCATION_API_KEY } from 'react-native-dotenv'
-import { FETCH_JOBS, LIKE_JOB } from './types';
+import { FETCH_JOBS, LIKE_JOB, RESET_JOBS } from './types';
 import { mockData } from '../mockData/mock'
 
 
@@ -25,13 +25,14 @@ export const fetchJobs2 = () => (dispatch) => {
   dispatch({type: FETCH_JOBS, payload: MOCKDATA})
 }
 
-export const fetchJobs = (region) => async (dispatch) => {
+export const fetchJobs = (region, callback) => async (dispatch) => {
   const {latitude, longitude} = region
   let zip = await reverseGeocode({latitude, longitude}, GEOLOCATION_API_KEY)
   try {
     const url = buildJobsUrl(zip)
-    let {data} = await axios.get(url)
-    dispatch({type: FETCH_JOBS, payload: mockData})
+    // let {data} = await axios.get(url)
+    dispatch({ type: FETCH_JOBS, payload: mockData });
+    callback();
   } catch (e) {
     console.log('e: ', e);
   }
@@ -44,10 +45,8 @@ export const likeJob = (job) => {
   };
 };
 
-// export const likeJob = (job) => dispatch => {
-//   console.log('job: ', job);
-//   dispatch ({
-//     payload: job,
-//     type: LIKE_JOB
-//   });
-// };
+export const resetJobs = () => {
+  return {
+    type: RESET_JOBS
+  };
+};

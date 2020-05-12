@@ -3,8 +3,8 @@ import { ActivityIndicator, StyleSheet, Dimensions, View } from "react-native";
 import MapView from 'react-native-maps';
 import { Button, Icon } from 'react-native-elements';
 import { connect } from 'react-redux'
-import { fetchJobs } from '../actions/jobActions'
 import { data } from '../mockData/mock'
+import * as actions from '../actions'
 
 const INITIAL_REGION = {
   longitude: -122,
@@ -12,7 +12,7 @@ const INITIAL_REGION = {
   longitudeDelta: 0.04,
   latitudeDelta: 0.09
 }
-const MapScreen = ({jobs, onFetchJobs, navigation}) => {
+const MapScreen = ({fetchJobs, navigation}) => {
   const [region, setRegion] = useState(INITIAL_REGION)
   const [mapLoaded, setMapLoaded] = useState(false)
 
@@ -23,7 +23,7 @@ const MapScreen = ({jobs, onFetchJobs, navigation}) => {
   }
 
   const onButtonPress = () => {
-    onFetchJobs(region, () => {
+    fetchJobs(region, () => {
       navigation.navigate('deck');
     });
   }
@@ -53,20 +53,13 @@ const MapScreen = ({jobs, onFetchJobs, navigation}) => {
   )
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onFetchJobs: (region) => dispatch(fetchJobs(region))
-  }
-}
-
 const mapStateToProps = ({job}) => {
   return {
     jobs: job.jobs
-
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MapScreen);
+export default connect(mapStateToProps, actions)(MapScreen);
 
 const styles = StyleSheet.create({
   container: {

@@ -4,10 +4,9 @@ import { connect } from 'react-redux';
 import MapView from 'react-native-maps';
 import { Card, Button, Icon } from 'react-native-elements';
 import Swipe from '../components/Swipe';
-import { likeJob } from '../actions/jobActions'
-import * as actions from '../actions'
+import * as actions from '../actions/jobActions'
 
-const DeckScreen = ({jobs, navigation, onLikeJob }) => {
+const DeckScreen = ({jobs, navigation, likeJob }) => {
 
   const renderCard = (job) => {
     const initialRegion = {
@@ -59,7 +58,7 @@ const DeckScreen = ({jobs, navigation, onLikeJob }) => {
         data={jobs.results}
         renderCard={renderCard}
         renderNoMoreCards={renderNoMoreCards}
-        onSwipeRight={job => onLikeJob(job)}
+        onSwipeRight={job => likeJob(job)}
         keyProp="jobkey"
       />
     </View>
@@ -74,12 +73,6 @@ const styles = {
   }
 };
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onLikeJob: (job) => dispatch(likeJob(job))
-  }
-}
-
 function mapStateToProps({ job }) {
   return { jobs: job.jobs };
 }
@@ -93,4 +86,4 @@ DeckScreen.navigationOptions = {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DeckScreen);
+export default connect(mapStateToProps, actions)(DeckScreen);
