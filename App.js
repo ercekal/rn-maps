@@ -1,7 +1,10 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Alert } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {Provider} from 'react-redux'
+import { Notifications } from 'expo';
+import * as Permissions from 'expo-permissions';
+import Constants from 'expo-constants';
 import { PersistGate } from 'redux-persist/integration/react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -16,8 +19,48 @@ import configureStore from './store';
 
 const {store, persistor} = configureStore();
 export default function App() {
+  const [expoPushToken, setExpoPushToken] = useState('')
+  const [notification, setNotification] = useState({})
   const Tab = createBottomTabNavigator();
   const Stack = createStackNavigator();
+  useEffect(() => {
+    registerForPushNotificationsAsync()
+    _notificationSubscription = Notifications.addListener(_handleNotification);
+  }, [])
+  const _handleNotification = notification => {
+    Vibration.vibrate();
+    console.log(notification);
+    setNotification({ notification: notification });
+  };
+
+  const registerForPushNotificationsAsync = async () => {
+
+    if (Constants.isDevice) {
+      const { status: existingStatus } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = await Notifications.getExpoPushTokenAsync();
+      setExpoPushToken({ expoPushToken: token });
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    if (Platform.OS === 'android') {
+      Notifications.createChannelAndroidAsync('default', {
+        name: 'default',
+        sound: true,
+        priority: 'max',
+        vibrate: [0, 250, 250, 250],
+      });
+    }
+  };
 
   function ReviewStack() {
     return (
