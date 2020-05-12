@@ -24,7 +24,7 @@ const MapScreen = ({fetchJobs, navigation}) => {
 
   const onButtonPress = () => {
     fetchJobs(region, () => {
-      navigation.navigate('deck');
+      navigation.navigate('Jobs');
     });
   }
 
