@@ -3,7 +3,9 @@ import {
 } from '../actions/types'
 
 const initialState = {
-  jobs: []
+  jobs: {
+    results: []
+  }
 }
 
 const jobReducer = (state = initialState, action) => {

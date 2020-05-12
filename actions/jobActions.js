@@ -2,10 +2,8 @@ import axios from 'axios';
 import reverseGeocode from 'latlng-to-zip';
 import qs from 'qs';
 import { GEOLOCATION_API_KEY } from 'react-native-dotenv'
-import {
-  FETCH_JOBS
-} from './types';
-import {mockData} from '../mockData/mock'
+import { FETCH_JOBS, LIKE_JOB } from './types';
+import { mockData } from '../mockData/mock'
 
 
 const JOB_ROOT_URL = 'https://api.indeed.com/ads/apisearch?'
@@ -24,7 +22,6 @@ const buildJobsUrl = zip => {
 }
 
 export const fetchJobs2 = () => (dispatch) => {
-  console.log('fetchJobs2: ');
   dispatch({type: FETCH_JOBS, payload: MOCKDATA})
 }
 
@@ -39,3 +36,18 @@ export const fetchJobs = (region) => async (dispatch) => {
     console.log('e: ', e);
   }
 }
+
+export const likeJob = (job) => {
+  return {
+    payload: job,
+    type: LIKE_JOB
+  };
+};
+
+// export const likeJob = (job) => dispatch => {
+//   console.log('job: ', job);
+//   dispatch ({
+//     payload: job,
+//     type: LIKE_JOB
+//   });
+// };

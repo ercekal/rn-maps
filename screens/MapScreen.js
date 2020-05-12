@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { ActivityIndicator, StyleSheet, Dimensions, View } from "react-native";
 import MapView from 'react-native-maps';
-import {connect} from 'react-redux'
+import { Button, Icon } from 'react-native-elements';
+import { connect } from 'react-redux'
 import { fetchJobs } from '../actions/jobActions'
-import {data} from '../mockData/mock'
+import { data } from '../mockData/mock'
 
 const INITIAL_REGION = {
   longitude: -122,
@@ -11,17 +12,20 @@ const INITIAL_REGION = {
   longitudeDelta: 0.04,
   latitudeDelta: 0.09
 }
-const MapScreen = ({jobs, onFetchJobs}) => {
-  console.log('jobs: ', jobs);
+const MapScreen = ({jobs, onFetchJobs, navigation}) => {
   const [region, setRegion] = useState(INITIAL_REGION)
   const [mapLoaded, setMapLoaded] = useState(false)
 
   useEffect(() => setMapLoaded(true), [])
 
   const onRegionChangeComplete = (region) => {
-    console.log('region: ', region);
-    onFetchJobs(region)
     setRegion(region)
+  }
+
+  const onButtonPress = () => {
+    onFetchJobs(region, () => {
+      navigation.navigate('deck');
+    });
   }
 
   if (!mapLoaded) {
@@ -36,6 +40,15 @@ const MapScreen = ({jobs, onFetchJobs}) => {
         style={styles.mapStyle}
         onRegionChangeComplete={onRegionChangeComplete}
         />
+        <View style={styles.buttonContainer}>
+          <Button
+            large
+            title="Search This Area"
+            backgroundColor="#009688"
+            icon={{ name: 'search' }}
+            onPress={onButtonPress}
+          />
+        </View>
     </View>
   )
 };
@@ -47,7 +60,6 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = ({job}) => {
-  console.log('job: ', job);
   return {
     jobs: job.jobs
 
@@ -67,4 +79,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  buttonContainer: {
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20
+  }
 });
