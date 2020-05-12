@@ -2,18 +2,19 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 import {Provider} from 'react-redux'
+import { PersistGate } from 'redux-persist/integration/react'
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
 import AuthScreen from './screens/AuthScreen'
 import WelcomeScreen from './screens/WelcomeScreen'
 import MapScreen from './screens/MapScreen'
 import DeckScreen from './screens/DeckScreen'
 import ReviewScreen from './screens/ReviewScreen'
 import SettingsScreen from './screens/SettingsScreen'
-import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
-import store from './store'
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import configureStore from './store';
 
+const {store, persistor} = configureStore();
 export default function App() {
   const Tab = createBottomTabNavigator();
   const Stack = createStackNavigator();
@@ -64,13 +65,15 @@ export default function App() {
   }
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
-          <Tab.Screen name="welcome" component={WelcomeScreen} />
-          <Tab.Screen name="auth" component={AuthScreen} />
-          <Tab.Screen name="main" component={Main} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={{ tabBarVisible: false }}>
+            <Tab.Screen name="welcome" component={WelcomeScreen} />
+            <Tab.Screen name="auth" component={AuthScreen} />
+            <Tab.Screen name="main" component={Main} />
+          </Tab.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }
